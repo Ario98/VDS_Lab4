@@ -24,14 +24,30 @@ scatter_data = df.query("year == {}".format(year_input))
 line_data = df.query("country_name == {}".format(country_input))
 
 # Plot definitions
-fig_scatter = px.scatter(scatter_data, x="midyear_population", y="total", color="country_name",
-                 size='midyear_population', hover_data=['gold', 'silver', 'bronze'], title='Olympic Medals Tally vs Midyear Population')
+fig_scatter = px.scatter(scatter_data, x="midyear_population", y="total", color="country_name", labels={
+                     "midyear_population": "Midyear Population",
+                     "total": "Total Medals",
+                     "country_name": "Country Name"
+                 },
+                 size='midyear_population', hover_data=['gold', 'silver', 'bronze'], title='Olympic Medals Tally vs Midyear Population in {}'.format(year_input))
 
-fig_line = px.line(line_data, x="year", y="total", color="country_name", title='Olympic Medal Tally over the years')
+fig_line = px.line(line_data, x="year", y="total", labels={
+                     "year": "Year",
+                     "total": "Total Medals",
+                     "country_name": "Country Name"
+                 }, color="country_name", title='Olympic Medal Tally over the years')
 
-fig_bar = px.bar(scatter_data, x='growth_rate', y='country_name', color="country_name")
+fig_bar = px.bar(scatter_data, x='country_name', y='growth_rate', labels={
+                     "growth_rate": "Growth Rate",
+                     "country_name": "Country Names"
+                 }, color="country_name", title='Growth Rate in {}'.format(year_input))
+fig_bar.update_layout(barmode='stack', xaxis={'categoryorder': 'total ascending'})
 
-fig_pie = px.pie(scatter_data, values='total', names='country_name')
+fig_pie = px.pie(scatter_data, values='total', names='country_name', labels={
+                     "total": "Total Medals",
+                     "country_name": "Country Names"
+                 }, title='Total Medal distribution in {}'.format(year_input))
+fig_pie.update_traces(textposition='inside', textinfo='percent+label')
 
 st.header("Dashboard")
 
