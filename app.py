@@ -14,6 +14,7 @@ st.set_page_config(
 
 # Sidebar
 st.sidebar.header('Country Olympic Games and Population data')
+st.sidebar.image('https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Olympic_rings_with_transparent_rims.svg/2560px-Olympic_rings_with_transparent_rims.svg.png')
 year_input = st.sidebar.selectbox('Pick a year', df['year'].unique())
 country_input = st.sidebar.multiselect(
     'Pick a country for lineplot',
